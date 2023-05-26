@@ -88,7 +88,7 @@ grid=makeGrid()
 
 def render(grid):
     canvas.delete("all")
-    canvas.create_text((55, 18),text="generation: "+str(generation), fill="white",font='tkDefaeultFont 12')
+    canvas.create_text((WIDTH-60, 18),text="generation: "+str(generation), fill="white",font='tkDefaeultFont 12')
     for y in grid:
         for x in y:
             x.draw()

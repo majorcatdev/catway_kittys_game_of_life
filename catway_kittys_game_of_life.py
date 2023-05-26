@@ -1,13 +1,13 @@
 from operator import truediv
-from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from random import randint
 from turtle import bgcolor
 
+#to advance to the next generation press any key
 
 root = tk.Tk()
-WIDTH=1024
+WIDTH=1280
 HEIGHT=800
 TILESIZE=32
 keyState=False
@@ -63,7 +63,7 @@ class Tile:
     
 def makeGrid():
     grid=[]
-    for y in range((HEIGHT//TILESIZE)):
+    for y in range(1,(HEIGHT//TILESIZE)):
         temp=[]
         for x in range((WIDTH//TILESIZE)):
             temp.append(Tile(x,y,TILESIZE))
@@ -120,7 +120,7 @@ def logic(grid):
 render(grid)
 
 press=False
-
+generation=0
 while RUNNING:
     if(keyState):
         press=True
@@ -128,6 +128,7 @@ while RUNNING:
         press=False
         logic(grid)
         render(grid)
+        generation+=1
 
 
     root.update_idletasks()

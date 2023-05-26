@@ -132,7 +132,7 @@ def logic(grid):
 
 render(grid)
 
-
+#though about making the grid easily ediable via the mouse, but decided against it after looking into how much work that would entail
 
 
 while RUNNING:

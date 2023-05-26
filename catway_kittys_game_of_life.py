@@ -1,8 +1,7 @@
-from operator import truediv
 from tkinter import ttk
 import tkinter as tk
 from random import randint
-from turtle import bgcolor
+
 
 #to advance to the next generation press enter, to make generations go brrrrrr, press space
 

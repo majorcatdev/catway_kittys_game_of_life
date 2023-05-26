@@ -4,7 +4,7 @@ import tkinter as tk
 from random import randint
 from turtle import bgcolor
 
-#to advance to the next generation press any key
+#to advance to the next generation press enter, to make generations go brrrrrr, press space
 
 root = tk.Tk()
 WIDTH=1280
@@ -15,7 +15,8 @@ RUNNING=True
 BGCOLOR="#5e5e5d"
 AWAKECAT = tk.PhotoImage(file='cat1.png')
 ASLEEPCAT= tk.PhotoImage(file='cat2.png')
-
+press=False
+generation=1
 
 def randbool():
     if(randint(0,1)==1):
@@ -33,12 +34,20 @@ canvas.pack(anchor=tk.CENTER, expand=True)
 #widget.bind(event, handler, add=None)
 
 def keyDown(event):
-    global keyState
-    keyState=True
+    if(event.keycode==13):
+        global keyState
+        keyState=True
+    elif(event.keycode==32):
+        global press
+        press=True
 
 def keyUp(event):
-    global keyState
-    keyState=False
+    if(event.keycode==13):
+        global keyState
+        keyState=False
+    elif(event.keycode==32):
+        global press
+        press=False
 
 def window_exit():
     global RUNNING
@@ -49,7 +58,7 @@ root.bind("<KeyPress>",keyDown)
 root.bind("<KeyRelease>",keyUp)
 root.protocol("WM_DELETE_WINDOW", window_exit)
 
-generation=1
+
 
 #should have thought to do this in lolcode
 class Tile:
@@ -123,7 +132,7 @@ def logic(grid):
 
 render(grid)
 
-press=False
+
 
 
 while RUNNING:

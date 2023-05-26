@@ -1,3 +1,4 @@
+from operator import truediv
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -53,7 +54,7 @@ class Tile:
         self.x=x
         self.y=y
         self.size=size
-        self.awake=randbool()
+        self.awake=False #randbool()
     def draw(self):
         if(self.awake):
             canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+15),image=AWAKECAT)
@@ -67,7 +68,13 @@ def makeGrid():
         for x in range((WIDTH//TILESIZE)):
             temp.append(Tile(x,y,TILESIZE))
         grid.append(temp)
+    grid[4][4].awake=True
+    grid[4][6].awake=True
+    grid[5][5].awake=True
+    grid[5][6].awake=True
+    grid[6][5].awake=True
     return grid
+
 grid=makeGrid()
 
 def render(grid):
@@ -86,11 +93,11 @@ def logic(grid):
             awakeNeighbours=0
             if(y>0 and grid[y-1][x].awake):
                 awakeNeighbours+=1
-            if(y<len(grid)-2 and grid[y+1][x].awake):
+            if(y<len(grid)-1 and grid[y+1][x].awake):
                 awakeNeighbours+=1
             if(x>0 and grid[y][x-1].awake):
                 awakeNeighbours+=1
-            if(x<len(grid[y])-2 and grid[y][x+1].awake):
+            if(x<len(grid[y])-1 and grid[y][x+1].awake):
                 awakeNeighbours+=1
             if(grid[y][x].awake):
                 if(awakeNeighbours<2):

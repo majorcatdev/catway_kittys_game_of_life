@@ -3,8 +3,9 @@ from tkinter import ttk
 import tkinter as tk
 
 root = tk.Tk()
-WIDTH=800
-HEIGHT=600
+WIDTH=840
+HEIGHT=680
+TILESIZE=16
 keysDown={}
 
 

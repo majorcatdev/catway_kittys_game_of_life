@@ -1,13 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+from random import randint
+
 
 root = tk.Tk()
 WIDTH=840
 HEIGHT=680
 TILESIZE=16
 keysDown={}
-
+RUNNING=True
 
 
 root.geometry(str(WIDTH)+'x'+str(HEIGHT))
@@ -25,16 +27,22 @@ def keyDown(event):
 def keyUp(event):
     keysDown[event]=False
 
+def window_exit():
+    global RUNNING
+    RUNNING=False
 
 
 root.bind("<KeyPress>",keyDown)
 root.bind("<KeyRelease>",keyUp)
+root.protocol("WM_DELETE_WINDOW", window_exit)
 
 
 
-while True:
+while RUNNING:
     #put main loop here
 
 
     root.update_idletasks()
     root.update()
+    if(not RUNNING):
+        root.destroy()

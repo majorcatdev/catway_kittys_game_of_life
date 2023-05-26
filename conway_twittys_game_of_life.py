@@ -9,7 +9,7 @@ root = tk.Tk()
 WIDTH=800
 HEIGHT=600
 TILESIZE=32
-keysDown={}
+keyState=False
 RUNNING=True
 BGCOLOR="#5e5e5d"
 AWAKECAT = tk.PhotoImage(file='cat1.png')
@@ -32,10 +32,12 @@ canvas.pack(anchor=tk.CENTER, expand=True)
 #widget.bind(event, handler, add=None)
 
 def keyDown(event):
-    keysDown[event]=True
+    global keyState
+    keyState=True
 
 def keyUp(event):
-    keysDown[event]=False
+    global keyState
+    keyState=False
 
 def window_exit():
     global RUNNING
@@ -78,12 +80,39 @@ render(grid)
 
 
 def logic(grid):
-    pass
+    changes=[]
+    for y in range(len(grid)-1):
+        for x in range(len(grid[0])-1):
+            awakeNeighbours=0
+            if(y>0 and grid[y-1][x].awake):
+                awakeNeighbours+=1
+            if(y<len(grid)-2 and grid[y+1][x].awake):
+                awakeNeighbours+=1
+            if(x>0 and grid[y][x-1].awake):
+                awakeNeighbours+=1
+            if(x<len(grid[y])-2 and grid[y][x+1].awake):
+                awakeNeighbours+=1
+            if(grid[y][x].awake):
+                if(awakeNeighbours<2):
+                    changes.append((grid[y][x],False))
+                elif(awakeNeighbours>3):
+                    changes.append((grid[y][x],False))
+            elif(awakeNeighbours==3):
+                changes.append((grid[y][x],True))
+    for i in changes:
+        i[0].awake=i[1]
 
 
+
+press=False
 
 while RUNNING:
-    #put main loop here
+    if(keyState):
+        press=True
+    if(press and not keyState):
+        press=False
+        logic(grid)
+        render(grid)
 
 
     root.update_idletasks()

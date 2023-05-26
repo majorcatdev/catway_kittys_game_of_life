@@ -7,8 +7,8 @@ from turtle import bgcolor
 
 
 root = tk.Tk()
-WIDTH=800
-HEIGHT=600
+WIDTH=1024
+HEIGHT=800
 TILESIZE=32
 keyState=False
 RUNNING=True
@@ -57,9 +57,9 @@ class Tile:
         self.awake=False #randbool()
     def draw(self):
         if(self.awake):
-            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+15),image=AWAKECAT)
+            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2),image=AWAKECAT)
         else:
-            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+15),image=ASLEEPCAT)
+            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2),image=ASLEEPCAT)
     
 def makeGrid():
     grid=[]
@@ -68,11 +68,12 @@ def makeGrid():
         for x in range((WIDTH//TILESIZE)):
             temp.append(Tile(x,y,TILESIZE))
         grid.append(temp)
-    grid[4][4].awake=True
-    grid[4][6].awake=True
-    grid[5][5].awake=True
-    grid[5][6].awake=True
-    grid[6][5].awake=True
+    grid[1][1].awake=True
+    grid[2][2].awake=True
+    grid[2][3].awake=True
+    grid[3][1].awake=True
+    grid[3][2].awake=True
+
     return grid
 
 grid=makeGrid()
@@ -89,7 +90,7 @@ render(grid)
 def logic(grid):
     changes=[]
     for y in range(len(grid)-1):
-        for x in range(len(grid[0])-1):
+        for x in range(len(grid[y])-1):
             awakeNeighbours=0
             if(y>0 and grid[y-1][x].awake):
                 awakeNeighbours+=1
@@ -99,6 +100,18 @@ def logic(grid):
                 awakeNeighbours+=1
             if(x<len(grid[y])-1 and grid[y][x+1].awake):
                 awakeNeighbours+=1
+
+
+            if(y>0 and x>0 and grid[y-1][x-1].awake):
+                awakeNeighbours+=1
+            if(y>0 and x<len(grid[y])-1 and grid[y-1][x+1].awake):
+                awakeNeighbours+=1
+            if(y<len(grid) and x>0 and grid[y+1][x-1].awake):
+                awakeNeighbours+=1
+            if(y<len(grid) and x<len(grid[y]) and grid[y+1][x+1].awake):
+                awakeNeighbours+=1
+
+
             if(grid[y][x].awake):
                 if(awakeNeighbours<2):
                     changes.append((grid[y][x],False))

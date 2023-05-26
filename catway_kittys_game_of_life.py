@@ -49,6 +49,9 @@ root.bind("<KeyPress>",keyDown)
 root.bind("<KeyRelease>",keyUp)
 root.protocol("WM_DELETE_WINDOW", window_exit)
 
+generation=0
+
+#should have thought to do this in lolcode
 class Tile:
     def __init__(self,x,y,size):
         self.x=x
@@ -76,6 +79,7 @@ grid=makeGrid()
 
 def render(grid):
     canvas.delete("all")
+    canvas.create_text((55, 18),text="generation: "+str(generation), fill="white",font='tkDefaeultFont 12')
     for y in grid:
         for x in y:
             x.draw()
@@ -120,7 +124,8 @@ def logic(grid):
 render(grid)
 
 press=False
-generation=0
+
+
 while RUNNING:
     if(keyState):
         press=True

@@ -24,7 +24,7 @@ def randbool():
 
 
 root.geometry(str(WIDTH)+'x'+str(HEIGHT))
-root.title('conway twitty\'s game of life')
+root.title('catway kitty\'s game of life')
 
 canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT, bg=BGCOLOR)
 canvas.pack(anchor=tk.CENTER, expand=True)
@@ -54,7 +54,7 @@ class Tile:
         self.x=x
         self.y=y
         self.size=size
-        self.awake=False #randbool()
+        self.awake=randbool()
     def draw(self):
         if(self.awake):
             canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2),image=AWAKECAT)
@@ -68,23 +68,18 @@ def makeGrid():
         for x in range((WIDTH//TILESIZE)):
             temp.append(Tile(x,y,TILESIZE))
         grid.append(temp)
-    grid[1][1].awake=True
-    grid[2][2].awake=True
-    grid[2][3].awake=True
-    grid[3][1].awake=True
-    grid[3][2].awake=True
+
 
     return grid
 
 grid=makeGrid()
 
 def render(grid):
-    canvas.create_rectangle((0, 0), (WIDTH, HEIGHT), fill=BGCOLOR)
+    canvas.delete("all")
     for y in grid:
         for x in y:
             x.draw()
 
-render(grid)
 
 
 def logic(grid):
@@ -114,15 +109,15 @@ def logic(grid):
 
             if(grid[y][x].awake):
                 if(awakeNeighbours<2):
-                    changes.append((grid[y][x],False))
+                    changes.append((x,y,False))
                 elif(awakeNeighbours>3):
-                    changes.append((grid[y][x],False))
+                    changes.append((x,y,False))
             elif(awakeNeighbours==3):
-                changes.append((grid[y][x],True))
+                changes.append((x,y,True))
     for i in changes:
-        i[0].awake=i[1]
+        grid[i[1]][i[0]].awake=i[2]
 
-
+render(grid)
 
 press=False
 

@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from random import randint
+from turtle import bgcolor
 
 
 root = tk.Tk()
@@ -10,6 +11,7 @@ HEIGHT=600
 TILESIZE=32
 keysDown={}
 RUNNING=True
+BGCOLOR="#5e5e5d"
 AWAKECAT = tk.PhotoImage(file='cat1.png')
 ASLEEPCAT= tk.PhotoImage(file='cat2.png')
 
@@ -23,7 +25,7 @@ def randbool():
 root.geometry(str(WIDTH)+'x'+str(HEIGHT))
 root.title('conway twitty\'s game of life')
 
-canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT, bg='white')
+canvas = tk.Canvas(root, width=WIDTH, height=HEIGHT, bg=BGCOLOR)
 canvas.pack(anchor=tk.CENTER, expand=True)
  
 
@@ -49,12 +51,12 @@ class Tile:
         self.x=x
         self.y=y
         self.size=size
-        self.awake=False
+        self.awake=randbool()
     def draw(self):
         if(self.awake):
-            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+1),image=AWAKECAT)
+            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+15),image=AWAKECAT)
         else:
-            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+1),image=ASLEEPCAT)
+            canvas.create_image((self.x*self.size+self.size/2, self.y*self.size+self.size/2+15),image=ASLEEPCAT)
     
 def makeGrid():
     grid=[]
@@ -67,12 +69,17 @@ def makeGrid():
 grid=makeGrid()
 
 def render(grid):
-    canvas.create_rectangle((0, 0), (WIDTH, HEIGHT), fill='white')
+    canvas.create_rectangle((0, 0), (WIDTH, HEIGHT), fill=BGCOLOR)
     for y in grid:
         for x in y:
             x.draw()
 
 render(grid)
+
+
+def logic(grid):
+    pass
+
 
 
 while RUNNING:

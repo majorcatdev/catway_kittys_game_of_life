@@ -49,7 +49,7 @@ root.bind("<KeyPress>",keyDown)
 root.bind("<KeyRelease>",keyUp)
 root.protocol("WM_DELETE_WINDOW", window_exit)
 
-generation=0
+generation=1
 
 #should have thought to do this in lolcode
 class Tile:
@@ -131,9 +131,11 @@ while RUNNING:
         press=True
     if(press and not keyState):
         press=False
+        generation+=1
         logic(grid)
         render(grid)
-        generation+=1
+        
+        
 
 
     root.update_idletasks()
